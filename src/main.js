@@ -8,6 +8,7 @@ import Geoff from "./components/Geoff/Geoff.vue";
 import Holly from "./components/Holly/Holly.vue";
 import Jack from "./components/Jack/Jack.vue";
 import Jeremy from "./components/Jeremy/Jeremy.vue";
+import DesignerPortfolio from "./components/Jeremy/designerportfolio/DesignerPortfolio.vue";
 
 Vue.config.productionTip = false;
 
@@ -20,6 +21,12 @@ const routes = [
   {path: "/holly", component: Holly},
   {path: "/jack", component: Jack},
   {path: "/jeremy", component: Jeremy},
+  {
+    name: "designerportfolio",
+    path: "/designerportfolio",
+    component: DesignerPortfolio,
+    props: true
+  },
 ];
 
 const router = new VueRouter({
@@ -28,5 +35,6 @@ const router = new VueRouter({
 });
 
 new Vue({
-  render: h => h(App)
+  render: h => h(App),
+  router
 }).$mount("#app");
