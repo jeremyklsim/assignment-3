@@ -13,6 +13,26 @@
         <h1>Our Designers</h1>
       </div>
 
+      <div v-for="user in users" v-bind:key="user.id" class="d-inline-flex designer-element">
+        <router-link to="/designerportfolio">
+          <div class="ddelement container row">
+            <div class="p-2">
+              <img class="user-image" v-bind:src="user.images[138]">
+            </div>
+
+            <div class="p-2">
+              <h4 v-bind:href="user.display_name" target="_blank">{{ user.display_name }}</h4>
+              <h6>Specialises in:</h6>
+              <ul>
+                <li v-bind:href="user.fields" target="_blank">{{ user.fields[0] }}</li>
+                <li v-bind:href="user.fields" target="_blank">{{ user.fields[1] }}</li>
+                <li v-bind:href="user.fields" target="_blank">{{ user.fields[2] }}</li>
+              </ul>
+            </div>
+          </div>
+        </router-link>
+      </div>
+
       <div class="row">
         <router-link v-bind:to="'/designerportfolio'">
           <div class="designer d-flex flex-row col-md">
@@ -77,11 +97,48 @@
 
 <script>
 export default {
-  name: "JeremyDesignerHomepage"
+  name: "JeremyDesignerHomepage",
+  props: ["source"],
+  data: function() {
+    return {
+      users: []
+    };
+  },
+  methods: {
+    getUsers: function() {
+      console.log("get");
+
+      this.$http
+        .get("https://behance-mock-api.glitch.me/api/users")
+        .then(function(data) {
+          console.log("data", data);
+          this.users = data.body.users;
+        });
+    }
+  },
+  created: function() {
+    this.getUsers();
+  }
 };
 </script>
 
 <style scoped>
+
+.designer-element{
+  margin: 15px;
+}
+
+.ddelement {
+  padding: 50px;
+  margin: 50px;
+  border-radius: 25px;
+  box-shadow: -1px -1px 5px 5px rgba(0, 0, 0, 0.21);
+}
+
+.ddelement:hover {
+  box-shadow: none;
+}
+
 .designer-component {
   margin-top: 70px;
 }
@@ -111,8 +168,7 @@ export default {
   font-size: 20px;
 }
 
-a{
+a {
   color: #000;
-
 }
 </style>
